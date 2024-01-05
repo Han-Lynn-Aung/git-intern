@@ -26,11 +26,23 @@ public class ProductService {
     }
 
     public Optional<Product> getProductById(Long id){
-        return prodRepository.findById(id);
+        Optional<Product> getSingleProduct = prodRepository.findById(id);
+    if(getSingleProduct.isPresent()){
+        return getSingleProduct;
+    }
+        throw new RuntimeException("Product not available" + id);
     }
 
     public Product updateProduct(Product product) {
-        return prodRepository.save(product);
+        Optional<Product> productUpdate = prodRepository.findById(product.getId());
+        if (productUpdate.isPresent()){
+            Product updateProd = productUpdate.get();
+            updateProd.setName(product.getName());
+            updateProd.setDescription(product.getDescription());
+            prodRepository.save(updateProd);
+            return updateProd;
+        }
+        throw new RuntimeException("Product not available" + product.getId());
     }
     public void deleteProduct(Long id) {
         prodRepository.deleteById(id);

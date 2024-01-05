@@ -16,6 +16,7 @@ import java.util.Optional;
 public class ProductController {
     @Autowired
     private ProductService prodService;
+
     @GetMapping("/get")
     public ResponseEntity<List<Product>> getAllProducts() {
         return ResponseEntity.ok(prodService.getAllProduct());
@@ -51,6 +52,7 @@ public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         product.setId(id);
         return ResponseEntity.ok(prodService.updateProduct(product));
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Boolean> deleteProduct(@PathVariable Long id) {
         prodService.deleteProduct(id);
