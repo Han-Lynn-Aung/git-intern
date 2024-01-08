@@ -44,6 +44,7 @@ public class AuthController {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
             );
+
             final String token = jwtUtil.generateToken(authRequest.getUsername());
 
             // Return the token along with a success message in a map
