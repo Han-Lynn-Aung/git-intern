@@ -44,13 +44,20 @@ public class AuthController {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
             );
-
             final String token = jwtUtil.generateToken(authRequest.getUsername());
-            return ResponseEntity.ok(new AuthResponse("Login successfully", token));
+
+            // Return the token along with a success message in a map
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Login successful");
+            response.put("token", token);
+
+            return ResponseEntity.ok(response);
         } catch (AuthenticationException ex) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse("Invalid username/password"));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ErrorResponse("Invalid username/password"));
         }
     }
+
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
