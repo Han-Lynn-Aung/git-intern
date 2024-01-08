@@ -4,6 +4,7 @@ import com.cdsg.gitintern.exception.ErrorResponse;
 import com.cdsg.gitintern.model.AuthRequest;
 import com.cdsg.gitintern.model.AuthResponse;
 import com.cdsg.gitintern.model.User;
+import com.cdsg.gitintern.password_generator.PasswordEncoderGenerator;
 import com.cdsg.gitintern.repository.UserRepository;
 import com.cdsg.gitintern.service.CustomUserDetailsService;
 import com.cdsg.gitintern.util.JwtUtil;
@@ -13,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,7 +70,7 @@ public class AuthController {
             newUser.setName(user.getName());
             newUser.setUsername(user.getUsername());
             newUser.setEmail(user.getEmail());
-            newUser.setPassword(user.getPassword());
+            newUser.setPassword(new PasswordEncoderGenerator().encode(user.getPassword()));
 
             User savedUser = userRepository.save(newUser);
 
