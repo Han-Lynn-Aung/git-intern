@@ -33,4 +33,4 @@ build/
 .vscode/
 
 # Ignore Spring Boot application properties and YAML configuration
-/src/main/resources/application*.properties
+/src/main/resources/config.env
